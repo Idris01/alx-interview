@@ -31,11 +31,10 @@ try:
 
         if result:
             result = result.groupdict()
-            content["sz"] += int(result.get("sz"))
             key = result.get("st")
-            if key.strip() == "":
-                key = "non"
-            content[key] += 1
-            count += 1
+            if key in codes:
+                content[key] += 1
+                count += 1
+                content["sz"] += int(result.get("sz"))
 finally:
     process_log(content)
