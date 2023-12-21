@@ -7,36 +7,35 @@ if __name__ == "__main__":
     import sys
     import re
     from collections import defaultdict
-    import signal
     import functools
 
     pattn = r"[0-9.]+ - \[.*?\] \".*?\" (?P<st>[0-9]{3}) (?P<sz>[0-9]+)"
     content = defaultdict(lambda: 0)
-    count = 0
 
-    def process_log(content):
+    def process_log(content=content):
         print("File size: {}".format(content["sz"]))
         rem = dict(content)
         del rem["sz"]
         for key in sorted(list(rem.keys())):
             print("{}: {}".format(key, rem[key]))
 
-    signal.signal(signal.SIGINT, functools.partial(process_log, content))
+    def main():
+        count = 0
+        while True:
+            try:
+                if count == 10:
+                    process_log(content)
+                    count = 0
+                line = input()
+                result = re.search(pattn, line)
 
-    while True:
-        try:
-            if count == 10:
+                if result:
+                    result = result.groupdict()
+                    content["sz"] += int(result.get("sz"))
+                    content[result.get("st")] += 1
+                    count += 1
+            except KeyboardInterrupt:
                 process_log(content)
-                content.clear()
-                count = 0
-            line = input()
-            result = re.search(pattn, line)
+                sys.exit(0)
 
-            if result:
-                result = result.groupdict()
-                content["sz"] += int(result.get("sz"))
-                content[result.get("st")] += 1
-                count += 1
-        except KeyboardInterrupt:
-            content.clear()
-            count = 0
+    main()
