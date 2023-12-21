@@ -5,7 +5,7 @@ import sys
 import re
 from collections import defaultdict
 
-pattn = r"[0-9.]+ - \[.*?\] \".*?\" (?P<st>[0-9]{3}) (?P<sz>[0-9]+)"
+pattn = r"[0-9.]+ - \[.*?\] \".*?\" (?P<st>[0-9]{3}|.*?)? ?(?P<sz>[0-9]+)"
 content = defaultdict(lambda: 0)
 codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 
@@ -32,7 +32,10 @@ try:
         if result:
             result = result.groupdict()
             content["sz"] += int(result.get("sz"))
-            content[result.get("st")] += 1
+            key = result.get("st")
+            if key.strip() == "":
+                key = "non"
+            content[key] += 1
             count += 1
 finally:
     process_log(content)
