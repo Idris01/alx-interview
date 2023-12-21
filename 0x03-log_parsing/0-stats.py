@@ -7,6 +7,7 @@ from collections import defaultdict
 
 pattn = r"[0-9.]+ - \[.*?\] \".*?\" (?P<st>[0-9]{3}) (?P<sz>[0-9]+)"
 content = defaultdict(lambda: 0)
+codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 
 
 def process_log(content=content):
@@ -14,8 +15,9 @@ def process_log(content=content):
     rem = dict(content)
     del rem["sz"]
     for key in sorted(list(rem.keys())):
-        print("{}: {}".format(key, rem[key]))
-        sys.stdout.flush()
+        if key in codes:
+            print("{}: {}".format(key, rem[key]))
+    sys.stdout.flush()
 
 
 count = 0
