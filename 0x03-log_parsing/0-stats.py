@@ -32,5 +32,5 @@ try:
             content["sz"] += int(result.get("sz"))
             content[result.get("st")] += 1
             count += 1
-except KeyboardInterrupt:
+finally:
     process_log(content)
