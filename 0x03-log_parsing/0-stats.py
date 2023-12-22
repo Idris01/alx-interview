@@ -36,5 +36,7 @@ try:
                 content[key] += 1
                 content["sz"] += int(result.get("sz"))
         count += 1
+except KeyboardInterrupt:
+    pass
 finally:
     process_log(content)
