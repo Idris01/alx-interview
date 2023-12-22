@@ -5,7 +5,7 @@ import sys
 import re
 from collections import defaultdict
 
-pattn = r"\w+ ?- ?\[.*?\] \".*?\" (?P<st>[0-9]+|.*?)? ?(?P<sz>[0-9]+)"
+patt = r"([0-9.]+|\w+) ?- ?\[.*?\] \".*?\" (?P<st>[0-9]+|.*?)? ?(?P<sz>[0-9]+)"
 content = defaultdict(lambda: 0)
 codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 
@@ -27,7 +27,7 @@ try:
             process_log(content)
             count = 0
 
-        result = re.search(pattn, line)
+        result = re.search(patt, line)
 
         if result:
             result = result.groupdict()
