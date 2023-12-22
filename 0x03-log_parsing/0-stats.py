@@ -34,7 +34,7 @@ try:
             key = result.get("st")
             if key in codes:
                 content[key] += 1
-                count += 1
                 content["sz"] += int(result.get("sz"))
+        count += 1
 finally:
     process_log(content)
