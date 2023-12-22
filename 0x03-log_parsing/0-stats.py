@@ -5,7 +5,7 @@ import sys
 import re
 from collections import defaultdict
 
-pattn = r"[0-9.]+ - \[.*?\] \".*?\" (?P<st>[0-9]+|.*?)? ?(?P<sz>[0-9]+)"
+pattn = r"\w+ - \[.*?\] \".*?\" (?P<st>[0-9]+|.*?)? ?(?P<sz>[0-9]+)"
 content = defaultdict(lambda: 0)
 codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
 
