@@ -34,7 +34,7 @@ try:
             key = result.get("st")
             if key in codes:
                 content[key] += 1
-                content["sz"] += int(result.get("sz"))
+            content["sz"] += int(result.get("sz"))
         count += 1
 except KeyboardInterrupt:
     pass
